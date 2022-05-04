@@ -1,24 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello/Index</title>
-    <style>
-body { font-size:16pt; color:#999;}
-h1{ font-size:50pt; text-align:right; color:#f6f6f6;
-    margin:-20px 0px -30px 0px letter-spacing:-4pt;
-}
-    </style>    
-</head>
-<body>
-    <h1>Blade/Index</h1>
-    <p>{{$msg}}</p>
-    <form method="POST" action="/hello">
-        @csrf
-        <input type="text" name="msg">
-        <input type="submit">
-    </form>
-</body>
-</html>
+@extends('layouts.helloapp')
+
+@section('title','Index')
+@endsection
+@section('menubar')
+    @parent 
+    インデックスページ
+@endsection
+
+@section('content')
+    <p>ここが本文のコンテンツです。</p>
+    <table>
+        @foreach($data as $item)
+        <tr><th>{{$item['name']}}</th><td>{{$item['mail']}}</td></tr>
+        @endforeach
+        </table>
+    @endsection
+    <p>必要なだけ記述できます。</p>
+
+    @include('components.message', ['msg_title'=>'OK',
+    'msg_content'=>'サブビューです。'])
+
+
+@component('components.message')
+    @slot('msg_title')
+    CAUTION!
+    @endslot
+
+    @slot('msg_content')
+    これはメッセージの表示です。
+    @endslot
+
+@endcomponent
+
+@endsection
+
+@section('footer')
+copyright 2022 kanouao.
+@endsection
